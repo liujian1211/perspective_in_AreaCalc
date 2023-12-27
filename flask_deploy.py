@@ -5,9 +5,12 @@ import cv2
 from PIL import Image
 import requests
 import json
+<<<<<<< HEAD
 import  sqlite3
 import pickle
 import ast
+=======
+>>>>>>> ce0564bf044b5106cd8982755bd248a3b7a341e6
 
 app = Flask(__name__)
 
@@ -57,8 +60,14 @@ def get_image_name():
         response = requests.get(image_name, stream=True)
         response.raise_for_status()
         image = Image.open(response.raw)
+<<<<<<< HEAD
         # image.save('./saved_images/first_img.jpg')
         # img1 = cv2.imread('./saved_images/first_img.jpg')
+=======
+        image.save('./saved_images/first_img.jpg')
+
+        img1 = cv2.imread('./saved_images/first_img.jpg')
+>>>>>>> ce0564bf044b5106cd8982755bd248a3b7a341e6
 
         #**************改为手动添加点2023-11-15**************
         src_points = np.float32([
@@ -70,6 +79,7 @@ def get_image_name():
 
         dst_points = np.float32([
                 [0, 0],  #左上角
+<<<<<<< HEAD
                 [440, 0], #右上角
                 [440, 240], #右下角
                 [0, 240] #左下角
@@ -104,6 +114,26 @@ def get_image_name():
         # ************************************** M保存在数据库中 **************************************
 
         # np.savetxt('./saved_M/' + car_number + '.txt', M) #舍弃掉原来的保存在本地的做法
+=======
+                [320, 0], #右上角
+                [320, 240], #右下角
+                [0, 240] #左下角
+            ])
+        #单位：cm,4张棋盘格叠加
+
+        # dst_points = np.float32([
+        #     [0,0],
+        #     [160,0],
+        #     [160,120],
+        #     [0,120]
+        # ])
+        #单位：cm,1张棋盘格
+
+        M = cv2.getPerspectiveTransform(src_points, dst_points)
+        warped_image = cv2.warpPerspective(img1, M, (square_size * (16 - 2), square_size * (12 - 2)))
+        cv2.imwrite('./saved_images/img1_warped.jpg',warped_image)
+        np.savetxt('./saved_M/' + car_number + '.txt', M)
+>>>>>>> ce0564bf044b5106cd8982755bd248a3b7a341e6
         json_data = {"errorCode": 0, "errorMessage": "生成校准矩阵完毕"}
         json_str = json.dumps(json_data)
         print('校准完毕')
@@ -228,6 +258,7 @@ def correct_result():
     correct_p3 = request.args.get('correct_p3')
     correct_p4 = request.args.get('correct_p4')
 
+<<<<<<< HEAD
     # ************************************** 在数据库中根据车牌号提取出M **************************************
     #连接到SQLite数据库
     conn = sqlite3.connect('database.db')
@@ -250,17 +281,25 @@ def correct_result():
     # if car_number:
     #     M = np.loadtxt('./saved_M/' + car_number +'.txt')
     #     print(f'M的值为{M}')
+=======
+    if car_number:
+        M = np.loadtxt('./saved_M/' + car_number +'.txt')
+        print(f'M的值为{M}')
+>>>>>>> ce0564bf044b5106cd8982755bd248a3b7a341e6
     else:
         json_data = {"errorCode": 1, "errorMessage": "获取车牌号失败"}
         json_str = json.dumps(json_data)
         print('获取车牌号失败')
         return json_str
 
+<<<<<<< HEAD
     #关闭数据库连接
     cursor.close()
     conn.close()
     # ************************************** 在数据库中根据车牌号提取出M **************************************
 
+=======
+>>>>>>> ce0564bf044b5106cd8982755bd248a3b7a341e6
     if test_image_name:
         correct_p1_x = float(correct_p1.split(',')[0])
         correct_p1_y = float(correct_p1.split(',')[1])

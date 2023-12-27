@@ -1,5 +1,9 @@
 import os
+<<<<<<< HEAD
 import ast
+=======
+
+>>>>>>> ce0564bf044b5106cd8982755bd248a3b7a341e6
 import numpy as np
 import cv2
 import time
@@ -157,6 +161,7 @@ def correct_result():
 
 if __name__ == '__main__':
     # get_image_name()
+<<<<<<< HEAD
     # correct_result()
     m_str = "[[ 1.20771149e-01, -3.20408340e-01, 4.70644005e+01], [-9.09599780e-03, -1.61812770e-01, 8.00876169e+01], [-1.44767448e-04, -1.38279140e-03, 1.00000000e+00]]"
     m_list = ast.literal_eval(m_str)
@@ -164,3 +169,6 @@ if __name__ == '__main__':
 
     # 打印转换后的NumPy数组
     print(M)
+=======
+    correct_result()
+>>>>>>> ce0564bf044b5106cd8982755bd248a3b7a341e6
